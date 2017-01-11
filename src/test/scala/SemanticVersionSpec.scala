@@ -48,6 +48,7 @@ class SemanticVersionSpec extends SemanticVersionBaseSpec {
     }
 
     "comparing versions" should {
+      // equality
       "give numeric identifiers lower precedence" in {
         val numericIdentiferVersion = new SemanticVersion("1.1.0-20160605")
         val nonNumericIdentifierVersion = new SemanticVersion("1.1.0-alpha")
@@ -55,6 +56,7 @@ class SemanticVersionSpec extends SemanticVersionBaseSpec {
         assert(result == true)
       }
 
+      // greater than
       "properly determine greater than for simple versions" in {
         val lesserVersion = new SemanticVersion("1.0.0")
         val greaterVersion = new SemanticVersion("2.0.0")
