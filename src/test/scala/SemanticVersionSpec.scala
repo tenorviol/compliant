@@ -52,8 +52,11 @@ class SemanticVersionSpec extends SemanticVersionBaseSpec {
       "give numeric identifiers lower precedence" in {
         val numericIdentiferVersion = new SemanticVersion("1.1.0-20160605")
         val nonNumericIdentifierVersion = new SemanticVersion("1.1.0-alpha")
-        val result = numericIdentiferVersion < nonNumericIdentifierVersion
-        assert(result == true)
+        val resultOne = numericIdentiferVersion < nonNumericIdentifierVersion
+        assert(resultOne == true)
+
+        val resultTwo = nonNumericIdentifierVersion < numericIdentiferVersion
+        assert(resultTwo == false)
       }
 
       // greater than
@@ -80,6 +83,16 @@ class SemanticVersionSpec extends SemanticVersionBaseSpec {
       "properly determine greater than for prerelease versions" in {
         val lesserVersion = new SemanticVersion("1.0.0-alpha")
         val greaterVersion = new SemanticVersion("1.0.0-beta")
+        val resultOne = greaterVersion > lesserVersion
+        assert(resultOne == true)
+
+        val resultTwo = lesserVersion > greaterVersion
+        assert(resultTwo == false)
+      }
+
+      "property determine greater than for prerelease versions with dates" in {
+        val lesserVersion = new SemanticVersion("1.0.0-20170109")
+        val greaterVersion = new SemanticVersion("1.0.0-20170110")
         val resultOne = greaterVersion > lesserVersion
         assert(resultOne == true)
 
