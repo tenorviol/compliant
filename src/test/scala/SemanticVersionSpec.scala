@@ -1,6 +1,4 @@
-package test
-
-import semanticversion.SemanticVersion
+package compliant
 
 class SemanticVersionSpec extends SemanticVersionBaseSpec {
   "A SemanticVersion" when {

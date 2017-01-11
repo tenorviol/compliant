@@ -1,4 +1,4 @@
-package test
+package compliant
 
 import org.scalatest._
 import org.scalatest.WordSpec

@@ -1,12 +1,8 @@
-package semanticversion
-
-import semanticversion._
+package compliant
 
 class SemanticVersion(val versionString: String) {
   val trimmedVersionString = versionString.trim.replaceAll("\\s", "")
-  // val major = "ma" // reg ex: ^([^.]*).*
   val splitByPeriods = trimmedVersionString.split("\\.")
-  // val major = "^([^.]*)".r.findFirstIn(trimmedVersionString).getOrElse("")
   val major = splitByPeriods(0)
   val minor = splitByPeriods(1)
   val patch = splitByPeriods.slice(2,splitByPeriods.length).mkString(".").split("\\+|\\-")(0)
