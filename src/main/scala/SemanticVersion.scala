@@ -80,8 +80,13 @@ class SemanticVersion(val versionString: String) {
   }
 
   def <=(otherVersion: SemanticVersion) : Boolean = {
-    // TODO: Implement this
-    throw new NotYetImplementedException()
+    if (this == otherVersion) {
+      true
+    } else if (this > otherVersion) {
+      false
+    } else {
+      true
+    }
   }
 
   def <(otherVersion: SemanticVersion) : Boolean = {
