@@ -90,7 +90,8 @@ class SemanticVersion(val versionString: String) {
   }
 
   def <(otherVersion: SemanticVersion) : Boolean = {
-    // TODO: Implement this
-    throw new NotYetImplementedException()
+    val notGreaterThan = !(this > otherVersion)
+    val notEqualTo = !(this == otherVersion)
+    notGreaterThan && notEqualTo
   }
 }
