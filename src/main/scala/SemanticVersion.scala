@@ -32,8 +32,8 @@ class SemanticVersion(val versionString: String) {
   }
 
   def prerelease : String = {
-    // TODO: Implement this
-    throw new NotYetImplementedException()
+    val splitByDashes = this.trimmedVersionString.split("\\-")
+    splitByDashes.slice(1, splitByDashes.length).mkString("-").split("\\+").head
   }
 
   def buildMetadata : String = {
