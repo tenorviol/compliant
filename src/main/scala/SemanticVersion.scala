@@ -57,8 +57,25 @@ class SemanticVersion(val versionString: String) {
   }
 
   def >(otherVersion: SemanticVersion) : Boolean = {
-    // TODO: Implement this
-    throw new NotYetImplementedException()
+    if (this.majorVersion > otherVersion.majorVersion) {
+      true
+    } else if (this.majorVersion == otherVersion.majorVersion) {
+      if (this.minorVersion > otherVersion.minorVersion) {
+        true
+      } else if (this.minorVersion == otherVersion.minorVersion) {
+        if (this.patchVersion > otherVersion.patchVersion) {
+          true
+        } else if (this.patchVersion == otherVersion.patchVersion && this.prerelease > otherVersion.prerelease) {
+          true
+        } else {
+          false // major, minor, patch version are same, prerelease is less
+        }
+      } else {
+        false // major version is same, and minor version is less
+      }
+    } else {
+      false // major version is less
+    }
   }
 
   def <=(otherVersion: SemanticVersion) : Boolean = {
