@@ -54,6 +54,40 @@ class SemanticVersionSpec extends SemanticVersionBaseSpec {
         val result = numericIdentiferVersion < nonNumericIdentifierVersion
         assert(result == true)
       }
+
+      "properly determine greater than for simple versions" in {
+        val lesserVersion = new SemanticVersion("1.0.0")
+        val greaterVersion = new SemanticVersion("2.0.0")
+        val resultOne = greaterVersion > lesserVersion
+        assert(resultOne == true)
+
+        val resultTwo = lesserVersion > greaterVersion
+        assert(resultTwo == false)
+      }
+
+      "properly determine greater than for simple versions with metadata" in {
+        val lesserVersion = new SemanticVersion("1.0.0+meta1")
+        val greaterVersion = new SemanticVersion("1.0.0+meta2")
+        val resultOne = greaterVersion > lesserVersion
+        assert(resultOne == false)
+
+        val resultTwo = lesserVersion > greaterVersion
+        assert(resultTwo == false)
+      }
+
+      "properly determine greater than for prerelease versions" in {
+        val lesserVersion = new SemanticVersion("1.0.0-alpha")
+        val greaterVersion = new SemanticVersion("1.0.0-beta")
+        val resultOne = greaterVersion > lesserVersion
+        assert(resultOne == true)
+
+        val resultTwo = lesserVersion > greaterVersion
+        assert(resultTwo == false)
+      }
+
+
     }
+
+
   }
 }
