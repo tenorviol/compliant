@@ -1,5 +1,7 @@
 package semanticversion
 
+import semanticversion._
+
 class SemanticVersion(val versionString: String) {
   val trimmedVersionString = versionString.trim.replaceAll("\\s", "")
   // val major = "ma" // reg ex: ^([^.]*).*
@@ -31,7 +33,7 @@ class SemanticVersion(val versionString: String) {
 
   def prerelease : String = {
     // TODO: Implement this
-    "sample-prerelease"
+    throw new NotYetImplementedException()
   }
 
   def buildMetadata : String = {
@@ -46,28 +48,26 @@ class SemanticVersion(val versionString: String) {
   }
 
   def ==(otherVersion: SemanticVersion) : Boolean = {
-    // TODO: Implement this
-    // true
     this.versionStringWithoutBuildMetadata == otherVersion.versionStringWithoutBuildMetadata
   }
 
   def >=(otherVersion: SemanticVersion) : Boolean = {
     // TODO: Implement this
-    true
+    throw new NotYetImplementedException()
   }
 
   def >(otherVersion: SemanticVersion) : Boolean = {
     // TODO: Implement this
-    true
+    throw new NotYetImplementedException()
   }
 
   def <=(otherVersion: SemanticVersion) : Boolean = {
     // TODO: Implement this
-    true
+    throw new NotYetImplementedException()
   }
 
   def <(otherVersion: SemanticVersion) : Boolean = {
     // TODO: Implement this
-    true
+    throw new NotYetImplementedException()
   }
 }
