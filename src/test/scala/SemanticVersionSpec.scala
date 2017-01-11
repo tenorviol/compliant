@@ -1,6 +1,6 @@
 package compliant
 
-class SemanticVersionSpec extends SemanticVersionBaseSpec {
+class SemanticVersionSpec extends CompliantSpecBase {
   "A SemanticVersion" when {
     "valid" should {
       "contain a major version" in {
