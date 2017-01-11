@@ -1,3 +1,5 @@
+package semanticversion
+
 class SemanticVersion(val versionString: String) {
   val trimmedVersionString = versionString.trim.replaceAll("\\s", "")
   // val major = "ma" // reg ex: ^([^.]*).*
