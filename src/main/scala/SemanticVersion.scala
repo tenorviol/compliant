@@ -8,7 +8,7 @@ object SemanticVersion {
 
 }
 
-class SemanticVersion(val versionString: String) {
+class SemanticVersion(val versionString: String) extends Ordered[SemanticVersion] {
 
   val fullVersionString: String = versionString.trim.replaceAll("\\s", "")
 
@@ -34,47 +34,27 @@ class SemanticVersion(val versionString: String) {
     this.versionStringWithoutBuildMetadata == otherVersion.versionStringWithoutBuildMetadata
   }
 
-  def >=(otherVersion: SemanticVersion) : Boolean = {
-    val greaterThan = this > otherVersion
-    val equalTo = this == otherVersion
-    greaterThan || equalTo
-  }
-
-  def >(otherVersion: SemanticVersion) : Boolean = {
-    if (this.majorVersion > otherVersion.majorVersion) {
-      true
-    } else if (this.majorVersion == otherVersion.majorVersion) {
-      if (this.minorVersion > otherVersion.minorVersion) {
-        true
-      } else if (this.minorVersion == otherVersion.minorVersion) {
-        if (this.patchVersion > otherVersion.patchVersion) {
-          true
-        } else if (this.patchVersion == otherVersion.patchVersion && this.prerelease > otherVersion.prerelease) {
-          true
+  def compare(that: SemanticVersion) = {
+    if (this == that) {
+      0
+    } else if (this.majorVersion > that.majorVersion) {
+      1
+    } else if (this.majorVersion == that.majorVersion) {
+      if (this.minorVersion > that.minorVersion) {
+        1
+      } else if (this.minorVersion == that.minorVersion) {
+        if (this.patchVersion > that.patchVersion) {
+          1
+        } else if (this.patchVersion == that.patchVersion && this.prerelease > that.prerelease) {
+          1
         } else {
-          false // major, minor, patch version are same, prerelease is less
+          -1 // major, minor, patch version are same, prerelease is less
         }
       } else {
-        false // major version is same, and minor version is less
+        -1 // major version is same, and minor version is less
       }
     } else {
-      false // major version is less
+      -1 // major version is less
     }
-  }
-
-  def <=(otherVersion: SemanticVersion) : Boolean = {
-    if (this == otherVersion) {
-      true
-    } else if (this > otherVersion) {
-      false
-    } else {
-      true
-    }
-  }
-
-  def <(otherVersion: SemanticVersion) : Boolean = {
-    val notGreaterThan = !(this > otherVersion)
-    val notEqualTo = !(this == otherVersion)
-    notGreaterThan && notEqualTo
   }
 }
