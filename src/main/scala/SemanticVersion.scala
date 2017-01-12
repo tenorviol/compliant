@@ -1,41 +1,28 @@
 package compliant
 
+import scala.util.matching.Regex
+
+object SemanticVersion {
+
+  val re: Regex = """(\d+)\.(\d+)\.(\d+)(-([^+]+))?(\+(.+))?""".r
+
+}
+
 class SemanticVersion(val versionString: String) {
-  val trimmedVersionString = versionString.trim.replaceAll("\\s", "")
-  val splitByPeriods = trimmedVersionString.split("\\.")
-  val major = splitByPeriods(0)
-  val minor = splitByPeriods(1)
-  val patch = splitByPeriods.slice(2,splitByPeriods.length).mkString(".").split("\\+|\\-")(0)
 
-  def fullVersionString: String = {
-    this.trimmedVersionString
-  }
+  val fullVersionString: String = versionString.trim.replaceAll("\\s", "")
 
-  def majorVersion : String = {
-    this.major
-  }
-
-  def minorVersion : String = {
-    this.minor
-  }
-
-  def patchVersion : String = {
-    this.patch
+  val (majorVersion, minorVersion, patchVersion, prerelease, buildMetadata) = {
+    fullVersionString match {
+      case SemanticVersion.re(major, minor, patch, _, pre, _, meta) =>
+        (major, minor, patch, Option(pre).getOrElse(""), Option(meta).getOrElse(""))
+      case _ =>
+        throw new IllegalArgumentException(versionString)
+    }
   }
 
   def versionStringWithoutBuildMetadata : String = {
-    this.trimmedVersionString.split("\\+").head
-  }
-
-  def prerelease : String = {
-    val splitByDashes = this.trimmedVersionString.split("\\-")
-    splitByDashes.slice(1, splitByDashes.length).mkString("-").split("\\+").head
-  }
-
-  def buildMetadata : String = {
-    val splitByPlus = this.trimmedVersionString.split("\\+")
-    // join with plus to recreate original string
-    splitByPlus.slice(1,splitByPlus.length).mkString("+")
+    this.fullVersionString.split("\\+").head
   }
 
   def ==(otherVersionString: String) : Boolean = {
